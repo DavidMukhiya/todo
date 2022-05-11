@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import withNavigation from './withNavigation';
+import withParams from './withParams';
 
 class TodoApp extends Component {
 
     render() {
         const LoginComponentWithNavigation = withNavigation(LoginComponent);
+        const WelcomeComponentWithParams = withParams(WelcomeComponent);
         return (
             <div className='TodoApp'>
                 <Router>
@@ -13,6 +15,8 @@ class TodoApp extends Component {
                         <Route path="/" element={<LoginComponent />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
                         <Route path="/welcome" element={<WelcomeComponent />} />
+                        <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
+                        <Route path="*" element={<ErrorComponent />} />
                     </Routes>
                 </Router>
 
@@ -26,12 +30,17 @@ class TodoApp extends Component {
 
 class WelcomeComponent extends Component {
     render() {
+
         return (
             <div>
-                Welcome inTodo Apps
+                <div>Welcome {this.props.params.name}</div>
             </div>
         )
     }
+}
+
+function ErrorComponent() {
+    return <div>An Error Occured. I don't know what to do! Contact support ad abc-igh-w</div>
 }
 
 
